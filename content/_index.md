@@ -25,7 +25,7 @@ experience:
     years: "2021"
 ---
 
-I am a PhD student in Political Science at the University of Wisconsin–Madison, specializing in comparative politics and research methodology. In my research I examine political violence, historical political economy, and the long shadows that state institutions cast over political life. My current projects include work on the political legacies of Soviet-era repression, the distribution of wartime casualties, and the politics of higher education in multiethnic states. Across these projects, I work in causal inference and Bayesian statistics, focusing predominantly on observational settings.
+I am a PhD student in Political Science at the University of Wisconsin–Madison, specializing in comparative politics and research methodology. In my research I examine political violence, historical political economy, and the long shadows that state institutions cast over political life. My current projects include work on the political legacies of Soviet-era repression, the distribution of wartime casualties, and the politics of higher education in multiethnic states. Across these projects, I work in causal inference, focusing predominantly on observational settings.
 
 My published work, co-authored with colleagues at the Vienna University of Economics and Business, looks at how citizens form judgments about government performance. I have also worked with international organizations including the International Organization for Migration, the V-Dem Institute, and the International Institute of Humanitarian Law.
 
