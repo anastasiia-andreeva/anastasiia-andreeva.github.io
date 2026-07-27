@@ -1,0 +1,13 @@
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a href="{{ "/" | relURL }}" class="site-nav__name">{{ .Site.Params.fullName }}</a>
+    <button class="site-nav__toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav-menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="site-nav-menu" class="site-nav__menu">
+      {{ range .Site.Menus.main }}
+        <a href="{{ .URL | relURL }}">{{ .Name }}</a>{{ if not (eq . (index $.Site.Menus.main (sub (len $.Site.Menus.main) 1))) }}<span class="site-nav__sep">/</span>{{ end }}
+      {{ end }}
+    </nav>
+  </div>
+</header>

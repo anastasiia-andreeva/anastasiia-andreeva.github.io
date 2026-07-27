@@ -1,0 +1,187 @@
+{{ define "main" }}
+{{ $p := .Site.Params }}
+
+<section class="hero">
+  <div class="hero__photo">
+    <img src="{{ "images/photo.jpg" | relURL }}" alt="Portrait of {{ $p.fullName }}" width="200" height="200">
+  </div>
+  <div class="hero__text">
+    <h1>{{ $p.fullName }}</h1>
+    <p class="hero__role">{{ $p.yearInProgram }}, {{ $p.department }}<br>{{ $p.university }}</p>
+    <p class="hero__tagline">{{ $p.tagline }}</p>
+    <div class="hero__links">
+      <a href="mailto:{{ $p.email }}">Email</a>
+      <span class="sep">/</span>
+      {{ if $p.social.linkedin }}<a href="{{ $p.social.linkedin }}" target="_blank" rel="noopener">LinkedIn</a><span class="sep">/</span>{{ end }}
+      {{ if $p.social.github }}<a href="{{ $p.social.github }}" target="_blank" rel="noopener">GitHub</a><span class="sep">/</span>{{ end }}
+      {{ if $p.social.bluesky }}<a href="{{ $p.social.bluesky }}" target="_blank" rel="noopener">Bluesky</a><span class="sep">/</span>{{ end }}
+      <a href="{{ "files/cv.pdf" | relURL }}" class="btn-cv">CV (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>About</h2>
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{ if .Params.education }}
+  <div class="edu-exp">
+    <div>
+      <h3>Education</h3>
+      <ul class="plain-list">
+        {{ range .Params.education }}
+        <li>
+          <span class="edu-exp__degree">{{ .degree }}</span>
+          <span class="edu-exp__meta">{{ .institution }} &middot; {{ .years }}</span>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ if .Params.experience }}
+    <div>
+      <h3>Before the PhD</h3>
+      <ul class="plain-list">
+        {{ range .Params.experience }}
+        <li>
+          <span class="edu-exp__degree">{{ .role }}</span>
+          <span class="edu-exp__meta">{{ .institution }} &middot; {{ .years }}</span>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+</section>
+
+<section class="section" id="research">
+  <h2>Research</h2>
+
+  {{ if $p.researchInterests }}
+  <ul class="tag-list">
+    {{ range $p.researchInterests }}
+    <li><span class="tag-list__check">&#9745;</span> {{ . }}</li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  {{ $papers := where hugo.Data.papers "job_market_paper" true }}
+  {{ if $papers }}
+  <div class="jmp-card">
+    <span class="badge badge--jmp">Job Market Paper</span>
+    {{ range $papers }}
+    <h3>{{ .title }}</h3>
+    <p class="paper__authors">{{ delimit .authors ", " }}</p>
+    {{ if .abstract }}<p class="paper__abstract">{{ .abstract }}</p>{{ end }}
+    {{ if .pdf }}<a href="{{ .pdf | relURL }}" class="paper__link">PDF</a>{{ else if .link }}<a href="{{ .link }}" target="_blank" rel="noopener" class="paper__link">Link</a>{{ end }}
+    {{ end }}
+  </div>
+  {{ end }}
+
+  {{ $working := where hugo.Data.papers "status" "working paper" }}
+  {{ $working = where $working "job_market_paper" "!=" true }}
+  {{ if $working }}
+  <h3 class="section__subheading">Working Papers</h3>
+  <ul class="paper-list">
+    {{ range $working }}
+    <li>
+      <span class="paper-list__authors">{{ delimit .authors ", " }}.</span>
+      {{ if .pdf }}<a href="{{ .pdf | relURL }}" class="paper-list__title">&ldquo;{{ .title }}&rdquo;</a>{{ else if .link }}<a href="{{ .link }}" target="_blank" rel="noopener" class="paper-list__title">&ldquo;{{ .title }}&rdquo;</a>{{ else }}<span class="paper-list__title">&ldquo;{{ .title }}&rdquo;</span>{{ end }}
+      <span class="badge">Working Paper</span>
+    </li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  {{ $published := where hugo.Data.papers "status" "published" }}
+  {{ if $published }}
+  <h3 class="section__subheading">Publications</h3>
+  <ul class="paper-list">
+    {{ range $published }}
+    <li>
+      <span class="paper-list__authors">{{ delimit .authors ", " }}.</span>
+      {{ if .link }}<a href="{{ .link }}" target="_blank" rel="noopener" class="paper-list__title">&ldquo;{{ .title }}&rdquo;</a>{{ else }}<span class="paper-list__title">&ldquo;{{ .title }}&rdquo;</span>{{ end }}
+      {{ if .venue }}<span class="paper-list__venue">{{ .venue }}{{ if .year }}, {{ .year }}{{ end }}.</span>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+  {{ end }}
+
+  {{ if hugo.Data.presentations }}
+  <h3 class="section__subheading">Presentations &amp; Talks</h3>
+  <ul class="plain-list">
+    {{ range hugo.Data.presentations }}
+    <li><span class="edu-exp__degree">{{ .title }}</span> <span class="edu-exp__meta">{{ .venue }} &middot; {{ .date }}</span></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+</section>
+
+{{ if hugo.Data.teaching }}
+<section class="section" id="teaching">
+  <h2>Teaching</h2>
+  <ul class="plain-list">
+    {{ range hugo.Data.teaching }}
+    <li>
+      <span class="edu-exp__degree">{{ .course }}</span>
+      <span class="edu-exp__meta">{{ .role }}{{ if .instructor }} &middot; {{ .instructor }}{{ end }} &middot; {{ .term }}</span>
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ if hugo.Data.awards }}
+<section class="section" id="awards">
+  <h2>Fellowships &amp; Awards</h2>
+  <ul class="plain-list">
+    {{ range hugo.Data.awards }}
+    <li><span class="edu-exp__degree">{{ .name }}</span> <span class="edu-exp__meta">{{ .year }}</span></li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+{{ if hugo.Data.writing }}
+<section class="section" id="writing">
+  <h2>Writing</h2>
+  {{ range hugo.Data.writing }}
+  <p class="writing__collection">{{ .collection | safeHTML }}, {{ .year }}</p>
+  <ul class="plain-list">
+    {{ range .posts }}
+    <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .title }}</a></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+</section>
+{{ end }}
+
+{{ if hugo.Data.media }}
+<section class="section" id="media">
+  <h2>Media</h2>
+  <ul class="paper-list">
+    {{ range hugo.Data.media }}
+    <li>
+      <span class="paper-list__authors">{{ .outlet }}{{ if .language }} ({{ .language }}){{ end }}.</span>
+      <a href="{{ .url }}" target="_blank" rel="noopener" class="paper-list__title">{{ .title }}</a>
+      {{ if .date }}<span class="paper-list__venue">{{ .date }}.</span>{{ end }}
+      {{ if .description }}<p class="paper__abstract">{{ .description }}</p>{{ end }}
+    </li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
+<section class="section" id="contact">
+  <h2>Contact</h2>
+  <p><a href="mailto:{{ $p.email }}">{{ $p.email }}</a></p>
+  <div class="hero__links">
+    {{ if $p.social.linkedin }}<a href="{{ $p.social.linkedin }}" target="_blank" rel="noopener">LinkedIn</a><span class="sep">/</span>{{ end }}
+    {{ if $p.social.github }}<a href="{{ $p.social.github }}" target="_blank" rel="noopener">GitHub</a><span class="sep">/</span>{{ end }}
+    {{ if $p.social.bluesky }}<a href="{{ $p.social.bluesky }}" target="_blank" rel="noopener">Bluesky</a>{{ end }}
+  </div>
+</section>
+
+{{ end }}

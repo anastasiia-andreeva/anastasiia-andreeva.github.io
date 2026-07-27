@@ -1,0 +1,27 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ .Site.Params.fullName }} — {{ .Site.Params.description }}{{ else }}{{ .Title }} — {{ .Site.Params.fullName }}{{ end }}</title>
+<meta name="description" content="{{ if .IsHome }}{{ .Site.Params.description }}{{ else }}{{ .Title }}{{ end }}">
+
+<meta property="og:title" content="{{ .Site.Params.fullName }}">
+<meta property="og:description" content="{{ .Site.Params.description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+
+{{ with resources.Get "css/style.css" }}
+  {{ $css := . | resources.Minify }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{ end }}
+
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
+<link rel="icon" href="{{ "favicon-32x32.png" | relURL }}" type="image/png">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
+
+{{ if .Site.Params.mysite.discovery }}
+<meta name="generator" content="Created using GaryKing.org/mysite (https://gking.harvard.edu/mysite)">
+{{ if .IsHome }}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"{{ .Site.Params.fullName }}","affiliation":{"@type":"Organization","name":"{{ .Site.Params.university }}"},"url":"{{ .Site.BaseURL }}","isBasedOn":"https://gking.harvard.edu/mysite"}
+</script>
+{{ end }}
+{{ end }}

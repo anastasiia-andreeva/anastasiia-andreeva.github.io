@@ -1,0 +1,53 @@
+baseURL: "https://andreyevva.github.io/"
+title: "Anastasiia Andreeva"
+locale: en-US
+copyright: "Anastasiia Andreeva"
+
+enableRobotsTXT: true
+
+params:
+  description: "PhD Student, Department of Political Science, University of Wisconsin-Madison"
+  author: "Anastasiia Andreeva"
+  fullName: "Anastasiia (Nastya) Andreeva"
+  nickname: "Nastya"
+  initials: "NA"
+  email: "aandreeva@wisc.edu"
+  tagline: "I study how authoritarian legacies and state repression shape political life."
+  department: "Department of Political Science"
+  university: "University of Wisconsin-Madison"
+  yearInProgram: "Third-year PhD Student"
+  advisors: "Yoshiko Herrera, Anton Strezhnev"
+  researchInterests:
+    - "political violence"
+    - "ethnic politics"
+    - "conflict"
+    - "causal inference"
+    - "observational data"
+    - "Bayesian statistics"
+  social:
+    linkedin: "https://www.linkedin.com/in/anastasiia-a-24155816a/"
+    github: "https://github.com/andreyevva/portfolio"
+    bluesky: "https://bsky.app/profile/andreeva.bsky.social"
+  mysite:
+    credit: true
+    discovery: true
+
+menu:
+  main:
+    - name: Research
+      url: "/#research"
+      weight: 10
+    - name: Teaching
+      url: "/#teaching"
+      weight: 20
+    - name: CV
+      url: "/files/cv.pdf"
+      weight: 30
+    - name: Contact
+      url: "/#contact"
+      weight: 40
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
