@@ -6,7 +6,7 @@
     </button>
     <nav id="site-nav-menu" class="site-nav__menu">
       {{ range .Site.Menus.main }}
-        <a href="{{ .URL | relURL }}">{{ .Name }}</a>{{ if not (eq . (index $.Site.Menus.main (sub (len $.Site.Menus.main) 1))) }}<span class="site-nav__sep">/</span>{{ end }}
+        <a href="{{ .URL | relURL }}">{{ .Name }}</a>
       {{ end }}
     </nav>
   </div>
